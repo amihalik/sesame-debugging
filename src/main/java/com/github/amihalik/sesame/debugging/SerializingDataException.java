@@ -17,8 +17,10 @@
 package com.github.amihalik.sesame.debugging;
 
 import org.apache.commons.io.IOUtils;
-import org.openrdf.rio.ntriples.NTriplesWriter;
-import org.openrdf.rio.turtle.TurtleParser;
+import org.openrdf.repository.sail.SailRepository;
+import org.openrdf.repository.sail.SailRepositoryConnection;
+import org.openrdf.rio.RDFFormat;
+import org.openrdf.sail.memory.MemoryStore;
 
 /**
  * Exception from Email:
@@ -51,8 +53,16 @@ public class SerializingDataException {
     public static final String TTL = "<foo:foo> <bar:bar> 1000000000000 .";
 
     public static void main(String[] args) throws Exception {
-        TurtleParser p = new TurtleParser();
-        p.setRDFHandler(new NTriplesWriter(System.out));
-        p.parse(IOUtils.toInputStream(TTL), "");
+        // TurtleParser p = new TurtleParser();
+        // p.setRDFHandler(new NTriplesWriter(System.out));
+        // p.parse(IOUtils.toInputStream(TTL), "");
+
+        SailRepository s = new SailRepository(new MemoryStore());
+        s.initialize();
+        SailRepositoryConnection conn = s.getConnection();
+        conn.add(IOUtils.toInputStream(TTL), "", RDFFormat.TURTLE);
+        System.out.println("Repo size :: " + conn.size());
+
+        System.out.println(conn.getStatements(null, null, null, false).next());
     }
 }
