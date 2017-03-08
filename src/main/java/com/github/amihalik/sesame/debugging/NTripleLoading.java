@@ -15,11 +15,11 @@ import com.google.common.base.Stopwatch;
 public class NTripleLoading {
 
     public static void main(String[] args) throws Exception {
-        // The Accumulo In Memory Rya Sail Repo
         Stopwatch watch = Stopwatch.createStarted();
         
         System.out.println(watch.elapsed(TimeUnit.SECONDS) + "s Creating Connection");
 
+        // The Accumulo In Memory Rya Sail Repo and disable AutoFlushing
         SailRepositoryConnection conn = Utils.getInMemoryAccConn(true);
 
         final File file = new File("C:/Users/amihalik/Downloads/fb2w.nt.gz");
