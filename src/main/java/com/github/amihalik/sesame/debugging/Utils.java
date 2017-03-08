@@ -4,12 +4,15 @@ import org.apache.accumulo.core.client.AccumuloException;
 import org.apache.accumulo.core.client.AccumuloSecurityException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.rya.accumulo.AccumuloRdfConfiguration;
+import org.apache.rya.accumulo.AccumuloRyaDAO;
 import org.apache.rya.api.RdfCloudTripleStoreConfiguration;
+import org.apache.rya.api.persist.RyaDAO;
 import org.apache.rya.api.persist.RyaDAOException;
 import org.apache.rya.indexing.GeoConstants;
 import org.apache.rya.indexing.accumulo.ConfigUtils;
 import org.apache.rya.indexing.external.PrecomputedJoinIndexerConfig;
 import org.apache.rya.indexing.external.PrecomputedJoinIndexerConfig.PrecomputedJoinStorageType;
+import org.apache.rya.rdftriplestore.RdfCloudTripleStore;
 import org.apache.rya.rdftriplestore.inference.InferenceEngineException;
 import org.apache.rya.sail.config.RyaSailFactory;
 import org.openrdf.model.Statement;
@@ -36,10 +39,28 @@ public class Utils {
         SailRepositoryConnection conn = s.getConnection();
         return conn;
     }
+    
+    public static void flushConnection(SailRepositoryConnection conn) {
+        Sail sail = ((SailRepository) conn.getRepository()).getSail();
+
+        if (sail instanceof RdfCloudTripleStore) {
+            RdfCloudTripleStore ryaSail = (RdfCloudTripleStore) sail;
+            RyaDAO ryaDAO = ryaSail.getRyaDAO();
+            if (ryaDAO instanceof AccumuloRyaDAO) {
+                AccumuloRyaDAO accRyaDAO = (AccumuloRyaDAO) ryaDAO;
+                try {
+                    accRyaDAO.flush();
+                } catch (RyaDAOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public static SailRepositoryConnection getInMemoryAccConn()
             throws RepositoryException, SailException, AccumuloException, AccumuloSecurityException, RyaDAOException, InferenceEngineException {
         Configuration conf = getConf();
+        ((AccumuloRdfConfiguration)conf).setFlush(false);
         conf.setBoolean(ConfigUtils.DISPLAY_QUERY_PLAN, true);
 
         SailRepository repository = null;
