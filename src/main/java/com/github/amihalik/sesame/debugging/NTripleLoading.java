@@ -20,7 +20,7 @@ public class NTripleLoading {
         
         System.out.println(watch.elapsed(TimeUnit.SECONDS) + "s Creating Connection");
 
-        SailRepositoryConnection conn = Utils.getInMemoryAccConn();
+        SailRepositoryConnection conn = Utils.getInMemoryAccConn(true);
 
         final File file = new File("C:/Users/amihalik/Downloads/fb2w.nt.gz");
         

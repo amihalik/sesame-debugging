@@ -57,10 +57,12 @@ public class Utils {
         }
     }
 
-    public static SailRepositoryConnection getInMemoryAccConn()
+    public static SailRepositoryConnection getInMemoryAccConn(boolean disableAutoFlushing)
             throws RepositoryException, SailException, AccumuloException, AccumuloSecurityException, RyaDAOException, InferenceEngineException {
         Configuration conf = getConf();
-        ((AccumuloRdfConfiguration)conf).setFlush(false);
+        if (disableAutoFlushing) {
+            ((AccumuloRdfConfiguration) conf).setFlush(false);
+        }
         conf.setBoolean(ConfigUtils.DISPLAY_QUERY_PLAN, true);
 
         SailRepository repository = null;

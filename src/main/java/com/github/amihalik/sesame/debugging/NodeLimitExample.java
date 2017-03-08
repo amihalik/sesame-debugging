@@ -24,7 +24,7 @@ public class NodeLimitExample {
 
         
         // The Accumulo In Memory Rya Sail Repo behaves as expected.
-        SailRepositoryConnection conn = Utils.getInMemoryAccConn();
+        SailRepositoryConnection conn = Utils.getInMemoryAccConn(false);
 
         
         ValueFactory vf = new ValueFactoryImpl();

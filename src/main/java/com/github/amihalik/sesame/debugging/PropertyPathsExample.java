@@ -23,7 +23,7 @@ public class PropertyPathsExample {
         // SailRepositoryConnection conn = Utils.getInMemoryConn();
 
         // The Accumulo In Memory Rya Sail Repo
-        SailRepositoryConnection conn = Utils.getInMemoryAccConn();
+        SailRepositoryConnection conn = Utils.getInMemoryAccConn(false);
 
         int depth = 10;
 
