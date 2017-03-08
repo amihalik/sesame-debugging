@@ -2,7 +2,6 @@ package com.github.amihalik.sesame.debugging;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 
