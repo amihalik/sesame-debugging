@@ -102,16 +102,21 @@ public class Utils {
         final AccumuloRdfConfiguration conf = new AccumuloRdfConfiguration();
 
         conf.setBoolean(ConfigUtils.USE_MOCK_INSTANCE, true);
-        conf.set(ConfigUtils.USE_PCJ, "true");
-        conf.set(ConfigUtils.USE_FREETEXT, "true");
-        conf.set(ConfigUtils.USE_TEMPORAL, "true");
+        conf.setBoolean(ConfigUtils.USE_PCJ, false);
+        conf.setBoolean(ConfigUtils.USE_FREETEXT, false);
+        conf.setBoolean(ConfigUtils.USE_TEMPORAL, true);
         conf.set(PrecomputedJoinIndexerConfig.PCJ_STORAGE_TYPE, PrecomputedJoinStorageType.ACCUMULO.name());
         conf.set(RdfCloudTripleStoreConfiguration.CONF_TBL_PREFIX, "RYA_");
         conf.set(ConfigUtils.CLOUDBASE_USER, "root");
         conf.set(ConfigUtils.CLOUDBASE_PASSWORD, "");
         conf.set(ConfigUtils.CLOUDBASE_INSTANCE, "instance");
+
+        // conf.set(ConfigUtils.CLOUDBASE_PASSWORD, "root");
+        // conf.set(ConfigUtils.CLOUDBASE_INSTANCE, "dev");
+        // conf.set(ConfigUtils.CLOUDBASE_ZOOKEEPERS, "192.168.33.10");
+        
         conf.setInt(ConfigUtils.NUM_PARTITIONS, 3);
-        conf.set(ConfigUtils.CLOUDBASE_AUTHS, "U");
+
 
         // only geo index statements with geo:asWKT predicates
         conf.set(ConfigUtils.GEO_PREDICATES_LIST, GeoConstants.GEO_AS_WKT.stringValue());
