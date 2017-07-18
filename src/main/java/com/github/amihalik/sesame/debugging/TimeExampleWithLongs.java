@@ -23,8 +23,9 @@ import com.google.common.base.Stopwatch;
 public class TimeExampleWithLongs {
 
     public static void main(String[] args) throws Exception {
+        Stopwatch watch = new Stopwatch();
+        watch.start();
 
-        Stopwatch watch = Stopwatch.createStarted();
 
         System.out.println(watch.elapsed(TimeUnit.SECONDS) + "s Creating Connection");
 

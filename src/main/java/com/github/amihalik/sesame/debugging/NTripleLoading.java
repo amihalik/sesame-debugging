@@ -14,7 +14,9 @@ import com.google.common.base.Stopwatch;
 public class NTripleLoading {
 
     public static void main(String[] args) throws Exception {
-        Stopwatch watch = Stopwatch.createStarted();
+        Stopwatch watch = new Stopwatch();
+        watch.start();
+
         
         System.out.println(watch.elapsed(TimeUnit.SECONDS) + "s Creating Connection");
 
